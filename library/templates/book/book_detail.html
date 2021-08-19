@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-sm-5 ">
+                <img src="{{book.cover.url}}" alt="" width='85%'>
+            </div>
+            <div class="col-sm-7">
+                <h3>{{book.book_name}} | <small class='text-secondary'>{{book.category}}</small></h3> 
+                <p> <span class='text-muted'>Author</span> | <strong>{{book.author_name}}</strong> </p>
+                <p>{{book.description}}</p>
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_superuser %}
+                        <a href="{% url 'book_update' book.pk %}" class='btn btn-primary'>Update</a>
+                        <a href="{% url 'book_delete' book.pk %}" class='btn btn-danger'> Delete</a>
+                    {% endif %}
+                {% endif %}
+                <div class="collapse" id="collapseExample">
+                    <p>{{book.description | linebreaks}}</p>
+                </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br><br>
+{% endblock content %}

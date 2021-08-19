@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid px-5">
+        <div class="row justify-content-lg-center">
+            <div class="col-lg-12">
+                    <h2 class="my-3">
+                    {% if request.GET.q is not null %}
+                        Issued Book Search Results For "{{ request.GET.q }}"
+                    {% endif %}
+                </h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Borrower Name</th>
+                            <th>Reader ID</th>
+                            <th>Book Name</th>
+                            <th>ISBN</th>
+                            <th>Author Name</th>
+                            <th>Issue Date</th>
+                            <th>Return Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                            <tr>
+                                <td>{{user.first_name}} {{user.last_name}}</td>
+                                <td>{{user.id_number}}</td>
+                                <td>{{book.book.book_name}}</td>
+                                <td>{{book.book.isbn}}</td>
+                                <td>{{book.book.author_name}}</td>
+                                <td>{{book.issue_date}}</td>
+                                <td>{{book.return_date}}</td>
+                                <td>
+                                    {% if request.user.is_superuser %}
+                                        <a href="{% url 'book_return' book.pk %}" class='btn btn-sm btn-danger disabled'>Return</a>
+                                    {% else %}
+                                        <a href="{% url 'book_return' book.pk %}" class='btn btn-sm btn-danger'>Return</a>
+                                    {% endif %}
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                            
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+            
+
+{% endblock content %}

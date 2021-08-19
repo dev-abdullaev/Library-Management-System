@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+    <form action="" method='post'>{% csrf_token %}
+        <p>Are you sure you want to remove <b>{{book.book_name}}?</b></p>
+        <a class='btn btn-warning' href="{{book.get_absolute_url}}">Cancel</a>
+        <button class="btn btn-danger ml-2" type="submit">Confirm</button>
+    </form>
+
+{% endblock %}
