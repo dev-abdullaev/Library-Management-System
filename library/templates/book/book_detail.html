@@ -5,16 +5,25 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-sm-5 ">
-                <img src="{{book.cover.url}}" alt="" width='85%'>
+                <img src="{{book.cover.url}}" alt="" width='75%'>
             </div>
             <div class="col-sm-7">
-                <h3>{{book.book_name}} | <small class='text-secondary'>{{book.category}}</small></h3> 
+                <h3>{{book.book_name}} | <small class='text-secondary'>{{book.category.title}}</small></h3>
+                    
+               
                 <p> <span class='text-muted'>Author</span> | <strong>{{book.author_name}}</strong> </p>
                 <p>{{book.description}}</p>
                 {% if request.user.is_authenticated %}
                     {% if request.user.is_superuser %}
-                        <a href="{% url 'book_update' book.pk %}" class='btn btn-primary'>Update</a>
-                        <a href="{% url 'book_delete' book.pk %}" class='btn btn-danger'> Delete</a>
+                        <a href="{% url 'book_update' book.slug %}" class='btn btn-primary'>Update</a>
+                        <a href="{% url 'book_delete' book.slug %}" class='btn btn-danger'> Delete</a>
+                    {% endif %}
+                    {% if book.quantity <= 0 %}
+                        <a class='btn btn-sm btn-block btn-primary disabled '>Unavailable</a>
+                    {% else %}
+                        {% if not user.is_superuser %}
+                            <a href="{% url 'book_issue' book.slug %}" class='btn btn-primary'>Issue</a>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
                 <div class="collapse" id="collapseExample">

@@ -6,8 +6,8 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
-from .forms import BookModelForm
-from .models import Book, BookIssue
+from .forms import BookModelForm, CategoryForm
+from .models import Book, BookIssue, BookReturn, Category
 
 
 @login_required
@@ -54,6 +54,11 @@ class BookDetailView(LoginRequiredMixin, DetailView):
     model = Book
     template_name = "book/book_detail.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = Category.objects.all()
+        return context
+
 
 class BookUpdateView(LoginRequiredMixin, UpdateView):
     model = Book
@@ -68,13 +73,19 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
 
 
 @login_required
-def bookIssueView(request, id):
-    book = get_object_or_404(Book, id=id)
-    issue_date = timezone.now()
-
+def bookIssueView(request, slug):
+    book = get_object_or_404(Book, slug=slug)
+    issue_date = book.issue_date
+    charge_amount = book.charge_amount
+    return_date = book.return_date
     quantity = book.quantity
     book_issue = BookIssue.objects.create(
-        issue_date=issue_date, book=book, user=request.user, quantity=quantity
+        issue_date=issue_date,
+        book=book,
+        user=request.user,
+        quantity=quantity,
+        charge_amount=charge_amount,
+        return_date=return_date,
     )
     book = book_issue
     return redirect("book_issue_list")
@@ -93,8 +104,8 @@ class BookIssueListView(LoginRequiredMixin, ListView):
 
 
 @login_required
-def bookReturnView(request, pk):
-    book_issue = get_object_or_404(BookIssue, id=pk)
+def bookReturnView(request, slug):
+    book_issue = get_object_or_404(BookIssue, slug=slug)
     book = book_issue
     if request.method == "POST":
         try:
@@ -130,3 +141,40 @@ class BookIssueSearchView(ListView):
             | Q(book__isbn__icontains=query)
             | Q(user__id_number__icontains=query)
         ).distinct()
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = "category/category_list.html"
+    context_object_name = "categories"
+
+
+class CategoryCreateView(LoginRequiredMixin, CreateView):
+    model = Category
+    template_name = "category/category_create.html"
+    form_class = CategoryForm
+    success_url = reverse_lazy("category_create")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["categories"] = Category.objects.all()
+        return context
+
+
+class CategoryDetailView(LoginRequiredMixin, DetailView):
+    model = Category
+    template_name = "category/category_detail.html"
+    context_object_name = "category"
+
+
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
+    model = Category
+    template_name = "category/category_update.html"
+    form_class = CategoryForm
+    success_url = reverse_lazy("admin_page")
+
+
+class CategoryDeleteView(LoginRequiredMixin, DeleteView):
+    model = Category
+    template_name = "category/category_delete.html"
+    success_url = reverse_lazy("admin_page")

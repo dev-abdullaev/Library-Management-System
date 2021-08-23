@@ -2,9 +2,9 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <div class="container jumbotron mt-4">
+    <div class="container mt-3">
         <div class="row justify-content-center ">
-            <div class="col-lg-10">
+            <div class="col-lg-11 m-3" style='border: 1px solid grey; border-radius: 10px;box-shadow: 1px 2px 3px 2px rgb(185, 204, 188)'>
                 <h1 class='text-center'>Register</h1>
                 <form form method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
@@ -32,8 +32,8 @@
                         </div>
                         
                     </div>
-                    <div style='margin-left: 150px;' class="form-group col-lg-7 mb-4">
-                        <button type="submit" class="btn btn-block btn-primary">Submit</button>
+                    <div style='margin-left: 190px;' class="form-group col-lg-7 mb-4">
+                        <button style='border-radius: 20px' type="submit" class="btn btn-block btn-outline-primary">Submit</button>
                     </div>
                 </form>
             </div>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h1 class="text-center mt-4">{{category.title}} </h1>
+    
+    <div class="container">
+        <div class="row">
+            {% for category in categories %}
+                <ul>
+                    <a  href="" class="text-decoration-none">{{category}}</a>
+                </ul>
+            {% endfor %}
+        </div>
+    </div>  
+        
+    
+{% endblock content %}

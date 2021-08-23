@@ -1,7 +1,6 @@
 from django import forms
-from django.forms import fields
 
-from .models import Book, BookIssue, BookReturn
+from .models import Book, Category
 
 
 class BookModelForm(forms.ModelForm):
@@ -18,13 +17,10 @@ class BookModelForm(forms.ModelForm):
         ]
 
 
-# class BookIssueForm(forms.ModelForm):
-#     class Meta:
-#         model = BookIssue
-#         fields = ["reader", "book"]
+class CategoryForm(forms.ModelForm):
+    category = forms.ChoiceField(choices=("", "-----"))
 
+    class Meta:
+        model = Category
+        fields = ["title"]
 
-# class BookReturnForm(forms.ModelForm):
-#     class Meta:
-#         model = BookReturn
-#         fields = ["reader", "book", "return_date"]

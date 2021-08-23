@@ -1,0 +1,7 @@
+      <div class="row d-flex">
+        <ul style='margin-left:-22px' class=' text-decoration-none'>
+            {% for category in category_links %} 
+              <a class="mt-3 text-decoration-none text-uppercase" href="{% url 'category_detail' category.slug %}">{{category.title}}</a><br>
+            {% endfor %}
+        </ul>
+      </div>

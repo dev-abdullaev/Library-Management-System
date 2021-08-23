@@ -1,8 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UsernameField
-from django.db import transaction
-from django.forms.models import ModelForm
-from django.forms.widgets import PasswordInput
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 from .models import User
 

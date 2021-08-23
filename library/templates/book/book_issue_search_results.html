@@ -36,9 +36,9 @@
                                 <td>{{book.return_date}}</td>
                                 <td>
                                     {% if request.user.is_superuser %}
-                                        <a href="{% url 'book_return' book.pk %}" class='btn btn-sm btn-danger disabled'>Return</a>
+                                        <a href="{% url 'book_return' book.slug %}" class='btn btn-sm btn-danger disabled'>Return</a>
                                     {% else %}
-                                        <a href="{% url 'book_return' book.pk %}" class='btn btn-sm btn-danger'>Return</a>
+                                        <a href="{% url 'book_return' book.slug %}" class='btn btn-sm btn-danger'>Return</a>
                                     {% endif %}
                                 </td>
 

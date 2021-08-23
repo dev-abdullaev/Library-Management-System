@@ -20,18 +20,12 @@ def custom_user_login(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-
+        user = authenticate(username=username, password=password)
         try:
-
-            if request.user.is_superuser:
-                user = authenticate(username=username, password=password)
+            if user.is_superuser:
                 login(request, user)
                 return redirect("admin_page")
             else:
-                user = authenticate(username=username, password=password)
                 login(request, user)
                 return redirect("home")
         except AttributeError:

@@ -3,25 +3,23 @@
 {% block content %}
 
 
-
-<div class="container-fluid mt-3">
+<h3 class='text-center mt-2'>{{category.title}}</h3>
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
             <h3>All Categories</h3>
             {% include "book/book_category.html" %}
         </div>
-        {% for book in books %}
+        {% for book in category.books.all %}
             <div class="ml-3 mb-3">
                 <div style='border-radius: 40px;' class="">
                     <a href="{% url 'book_detail' book.slug %}" class=''>
                         <img style='width: 200px; height: 320px; border-radius: 20px;' src="{{ book.cover.url }}" class="card-img-top" alt="...">
                     </a>
+                    <div class="card-body"></div>
                 </div>
             </div>
         {% endfor %}
     </div>
-
-    
-
 </div>  
 {% endblock content %}
