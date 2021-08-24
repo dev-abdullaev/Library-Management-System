@@ -1,13 +1,16 @@
+from datetime import timedelta
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import MultipleObjectsReturned
 from django.db.models import Q
+from django.forms.models import ModelMultipleChoiceField
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy
-from django.utils import timezone
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from .forms import BookModelForm, CategoryForm
-from .models import Book, BookIssue, BookReturn, Category
+from .models import Book, BookIssue, Category
 
 
 @login_required
@@ -77,7 +80,7 @@ def bookIssueView(request, slug):
     book = get_object_or_404(Book, slug=slug)
     issue_date = book.issue_date
     charge_amount = book.charge_amount
-    return_date = book.return_date
+    return_date = book.issue_date + timedelta(days=30)
     quantity = book.quantity
     book_issue = BookIssue.objects.create(
         issue_date=issue_date,

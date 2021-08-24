@@ -4,19 +4,8 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-4 mt-5">
-            <h3 class="mb-2">All Categories</h3>
-            {% for category in categories %}
-                <div class="row d-flex">
-                    <ul class=' text-decoration-none'>
-                        <a class="text-decoration-none text-uppercase" href="">{{category.title}}</a>
-                    </ul>
-                </div>
-            {% endfor %}
-        </div>
-
-        <div class="col-8">
+    <div class="row justify-content-center">
+        <div class="col-4">
             <h1 class='title mt-4 text-center text-primary'>Add Categories</h1>
             <div class="row justify-content-center">
                 <form style='width: 800px; margin-top: 40px;' action="" method='post' enctype="multipart/form-data">{% csrf_token %}

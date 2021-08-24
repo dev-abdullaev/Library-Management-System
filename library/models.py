@@ -6,10 +6,6 @@ from django.urls import reverse
 from users.models import User
 
 
-def get_expiry_date():
-    return date.today() + timedelta(days=30)
-
-
 class Category(models.Model):
     title = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(max_length=250)
@@ -22,9 +18,7 @@ class Category(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        # this line below give to the instance slug field a slug name
         self.slug = slugify(self.title)
-        # this line below save every fields of the model instance
         super(Category, self).save(*args, **kwargs)
 
 
@@ -39,7 +33,7 @@ class Book(models.Model):
     cover = models.ImageField(upload_to="book_cover/")
     quantity = models.IntegerField(default=100000)
     issue_date = models.DateField(auto_now_add=True)
-    return_date = models.DateField(default=get_expiry_date)
+    return_date = models.DateField(default=0)
     charge_amount = models.IntegerField(default=0)
     slug = models.SlugField(max_length=250)
 
@@ -49,18 +43,12 @@ class Book(models.Model):
     def __str__(self):
         return f"{self.book_name}"
 
-    def save(self, *args, **kwargs):
-        # this line below give to the instance slug field a slug name
-        self.slug = slugify(self.book_name)
-        # this line below save every fields of the model instance
-        super(Book, self).save(*args, **kwargs)
-
 
 class BookIssue(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     issue_date = models.DateField(auto_now_add=True)
-    return_date = models.DateField(default=get_expiry_date)
+    return_date = models.DateField(default=0)
     quantity = models.IntegerField(default=0)
     charge_amount = models.IntegerField(default=0)
     slug = models.SlugField(max_length=250)
@@ -70,18 +58,33 @@ class BookIssue(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.book.quantity = self.book.quantity - 1
             self.slug = slugify(self.book.book_name)
+            self.book.quantity = self.book.quantity - 1
+            self.book.save()
+        else:
+            self.book.quantity = self.book.quantity + 1
             self.book.save()
         super(BookIssue, self).save(*args, **kwargs)
+
+        # def save(self, *args, **kwargs):
+        #     if self.pk:
+        #     raise StandardError('Can\'t modify bla bla bla.')
+        # super(Payment, self).save(*args, **kwargs)
+
+        # Need to ipmlement this login in save method
+        # I tried but did not work
+        # date.today() >= self.book.return_date:
+        # overdue_days = (date.today() - self.book.return_date).days
+        # charge_rate = int(1.50)  ###  $1.50 per day
+        # self.charge_amount = charge_rate * overdue_days
 
 
 class BookReturn(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE)
     book_issue = models.ForeignKey(BookIssue, on_delete=models.CASCADE)
-    return_date = models.DateField(default=get_expiry_date)
+    return_date = models.DateField(default=0)
     charge_amount = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.book_issue)
+

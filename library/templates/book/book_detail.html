@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
     <div class="container mt-5">
@@ -22,7 +23,7 @@
                         <a class='btn btn-sm btn-block btn-primary disabled '>Unavailable</a>
                     {% else %}
                         {% if not user.is_superuser %}
-                            <a href="{% url 'book_issue' book.slug %}" class='btn btn-primary'>Issue</a>
+                            <a id='elementId'  href="{% url 'book_issue' book.slug %}" class='btn btn-primary'>Issue</a>
                         {% endif %}
                     {% endif %}
                 {% endif %}

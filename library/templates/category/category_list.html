@@ -4,13 +4,30 @@
 {% block content %}
     <h1 class="text-center mt-4">{{category.title}} </h1>
     
-    <div class="container">
-        <div class="row">
-            {% for category in categories %}
-                <ul>
-                    <a  href="" class="text-decoration-none">{{category}}</a>
-                </ul>
-            {% endfor %}
+    <div class="container col-4">
+    <h2 class="text-center mb-2 text-primary">All Categories</h2>
+        <div class="row justify-content-center">
+            
+            <table class="table ">
+                <thead>
+                    <tr>
+                        <th>Category Name</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td>
+                                <a  href="" class="text-decoration-none">{{category}}</a>
+                            </td>
+                            <td>
+                                <a  href="{% url 'category_update' category.slug %}" class="text-decoration-none">Update</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>            
         </div>
     </div>  
         

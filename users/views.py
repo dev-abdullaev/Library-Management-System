@@ -1,5 +1,4 @@
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
@@ -35,8 +34,3 @@ def custom_user_login(request):
 
     return render(request, "registration/login.html", {"form": form})
 
-
-def custom_user_logout(request):
-    if request.user.is_authenticated:
-        logout(request)
-        return redirect("login")

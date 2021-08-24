@@ -18,8 +18,6 @@ class BookModelForm(forms.ModelForm):
 
 
 class CategoryForm(forms.ModelForm):
-    category = forms.ChoiceField(choices=("", "-----"))
-
     class Meta:
         model = Category
         fields = ["title"]
