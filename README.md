@@ -32,7 +32,8 @@ python manage.py runserver
 go to the link http://127.0.0.1:8000 and Boooom welcome to fully functional LMS
 
 ## LMS Functionalities
- - Sign up and Sign in 
+ - Sign up, Sign in and Logout
+ - Password and Email reset/change (used - django.contrib.auth.urls)
  - A special Admin Dashboard to view everything and perform CRUD operations (not default django admin panel)
  - User can issue and return books by just a single click of Issue and Return buttons
  - Search functionality for both books along with already issued books and can be searched by ISBN number, book name, user id number and category title
@@ -42,9 +43,9 @@ go to the link http://127.0.0.1:8000 and Boooom welcome to fully functional LMS
 ## Roles
 
  <b>Readers</b>:
-  - Sign up, Sign in, change password, log out
+  - Sign up, Sign in, log out, reset password and email, 
   - View all the books
-  - Search for a book, view book info
+  - Search for a book and view a book info
   - Issue books
   - Return books 
   - View all his/her issued books
