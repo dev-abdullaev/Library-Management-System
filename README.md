@@ -3,8 +3,6 @@
 <img src="https://img.shields.io/badge/build-passing-success"> <img src="https://img.shields.io/badge/Python-3.8.10-blueviolet"> <img src="https://img.shields.io/badge/Django-3.2.6-blue"> <img src="https://img.shields.io/badge/SQLite-9cf"> <img src="https://img.shields.io/badge/Bootstrap--4-blueviolet"> <img src="https://img.shields.io/badge/LMS-red">
 
 
-
-
 ## Installation
 
 Clone this repo or just download directly from github and activate virtualenv.<br> 
