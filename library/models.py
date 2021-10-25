@@ -33,7 +33,7 @@ class Book(models.Model):
     cover = models.ImageField(upload_to="book_cover/")
     quantity = models.IntegerField(default=100000)
     issue_date = models.DateField(auto_now_add=True)
-    return_date = models.DateField(default=0)
+    return_date = models.DateField(default=30)
     charge_amount = models.IntegerField(default=0)
     slug = models.SlugField(max_length=250)
 
@@ -48,7 +48,7 @@ class BookIssue(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     issue_date = models.DateField(auto_now_add=True)
-    return_date = models.DateField(default=0)
+    return_date = models.DateField(default=30)
     quantity = models.IntegerField(default=0)
     charge_amount = models.IntegerField(default=0)
     slug = models.SlugField(max_length=250)
@@ -82,7 +82,7 @@ class BookIssue(models.Model):
 class BookReturn(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book_issue = models.ForeignKey(BookIssue, on_delete=models.CASCADE)
-    return_date = models.DateField(default=0)
+    return_date = models.DateField(default=30)
     charge_amount = models.IntegerField(default=0)
 
     def __str__(self):
